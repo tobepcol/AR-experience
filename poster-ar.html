@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR - 4 Revoluciones Industriales</title>
+
+  <!-- Librerías gratis y open source, cargadas desde CDN -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    body { margin: 0; overflow: hidden; }
+    /* Mensaje de ayuda mientras carga la cámara */
+    .loading {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: black; color: white; font-family: sans-serif;
+      z-index: 999; text-align: center; padding: 20px; box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loading" id="loadingMsg">
+    Apunta la cámara al póster impreso...
+  </div>
+
+  <!--
+    IMPORTANTE - Reemplaza estas rutas:
+    1. "targets.mind" -> el archivo que generaste en
+       https://hiukim.github.io/mind-ar-js-doc/tools/compile
+       (compilado a partir de la foto de tu póster)
+    2. "modelo.glb" -> tu modelo 3D descargado (ej. de Sketchfab)
+  -->
+  <a-scene
+    mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; uiScanning: no;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: true"
+  >
+    <a-assets>
+      <a-asset-item id="modelo3d" src="./modelo.glb"></a-asset-item>
+    </a-assets>
+
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!-- target 0 = tu primer póster/target compilado -->
+    <a-entity mindar-image-target="targetIndex: 0">
+      <a-gltf-model
+        rotation="0 0 0"
+        position="0 0 0.1"
+        scale="0.05 0.05 0.05"
+        src="#modelo3d"
+        animation-mixer
+      ></a-gltf-model>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    // Oculta el mensaje de carga cuando la cámara arranca
+    const scene = document.querySelector('a-scene');
+    scene.addEventListener('renderstart', () => {
+      document.getElementById('loadingMsg').style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
