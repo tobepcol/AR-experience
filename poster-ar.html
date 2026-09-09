@@ -46,15 +46,70 @@
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- target 0 = tu primer póster/target compilado -->
+    <!--
+      target 0 = TODO el póster completo (las 4 revoluciones en una sola imagen).
+      Como es un solo target, cada modelo necesita su propia posición (x y z)
+      para caer exactamente sobre su cuadrante correspondiente.
+
+      Sistema de coordenadas de MindAR: el plano del póster va de -0.5 a 0.5 en X,
+      y de -0.896 a 0.896 en Y (según el aspect ratio de tu imagen 768x1376).
+      (0,0) = centro exacto del póster. Y positivo = hacia arriba.
+
+      Centros calculados para tu póster (FtAR.png):
+        Tren (arriba-izq):        x=-0.25   y= 0.448
+        Auto Ford (arriba-der):   x= 0.25   y= 0.448
+        Computador (abajo-izq):   x=-0.25   y=-0.448
+        IA (abajo-der):           x= 0.25   y=-0.448
+    -->
     <a-entity mindar-image-target="targetIndex: 0">
+
+      <!-- 1ra Revolución: Tren de vapor (arriba-izquierda) -->
       <a-gltf-model
         rotation="0 0 0"
-        position="0 0 0.1"
-        scale="0.05 0.05 0.05"
+        position="-0.25 0.448 0.05"
+        scale="0.015 0.015 0.015"
         src="#modelo3d"
         animation-mixer
       ></a-gltf-model>
+
+      <!--
+        2da Revolución: Auto Ford (arriba-derecha)
+        Descomenta cuando tengas el modelo, y agrega su <a-asset-item> arriba
+        con id="modeloAuto" y src="./modelo-auto.glb"
+
+      <a-gltf-model
+        rotation="0 0 0"
+        position="0.25 0.448 0.05"
+        scale="0.015 0.015 0.015"
+        src="#modeloAuto"
+        animation-mixer
+      ></a-gltf-model>
+      -->
+
+      <!--
+        3ra Revolución: Computador (abajo-izquierda)
+
+      <a-gltf-model
+        rotation="0 0 0"
+        position="-0.25 -0.448 0.05"
+        scale="0.015 0.015 0.015"
+        src="#modeloComputador"
+        animation-mixer
+      ></a-gltf-model>
+      -->
+
+      <!--
+        4ta Revolución: IA (abajo-derecha)
+
+      <a-gltf-model
+        rotation="0 0 0"
+        position="0.25 -0.448 0.05"
+        scale="0.015 0.015 0.015"
+        src="#modeloIA"
+        animation-mixer
+      ></a-gltf-model>
+      -->
+
     </a-entity>
   </a-scene>
 
