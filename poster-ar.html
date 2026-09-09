@@ -42,6 +42,9 @@
   >
     <a-assets>
       <a-asset-item id="modelo3d" src="./modelo.glb"></a-asset-item>
+      <a-asset-item id="modeloAuto" src="./modelo-auto.glb"></a-asset-item>
+      <a-asset-item id="modeloComputador" src="./modelo-computador.glb"></a-asset-item>
+      <a-asset-item id="modeloIA" src="./modelo-ia.glb"></a-asset-item>
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -67,16 +70,12 @@
       <a-gltf-model
         rotation="0 0 0"
         position="-0.25 0.448 0.05"
-        scale="0.25 0.25 0.25"
+        scale="0.015 0.015 0.015"
         src="#modelo3d"
         animation-mixer
       ></a-gltf-model>
 
-      <!--
-        2da Revolución: Auto Ford (arriba-derecha)
-        Descomenta cuando tengas el modelo, y agrega su <a-asset-item> arriba
-        con id="modeloAuto" y src="./modelo-auto.glb"
-
+      <!-- 2da Revolución: Auto Ford (arriba-derecha) -->
       <a-gltf-model
         rotation="0 0 0"
         position="0.25 0.448 0.05"
@@ -84,11 +83,8 @@
         src="#modeloAuto"
         animation-mixer
       ></a-gltf-model>
-      -->
 
-      <!--
-        3ra Revolución: Computador (abajo-izquierda)
-
+      <!-- 3ra Revolución: Computador (abajo-izquierda) -->
       <a-gltf-model
         rotation="0 0 0"
         position="-0.25 -0.448 0.05"
@@ -96,11 +92,8 @@
         src="#modeloComputador"
         animation-mixer
       ></a-gltf-model>
-      -->
 
-      <!--
-        4ta Revolución: IA (abajo-derecha)
-
+      <!-- 4ta Revolución: IA (abajo-derecha) -->
       <a-gltf-model
         rotation="0 0 0"
         position="0.25 -0.448 0.05"
@@ -108,7 +101,6 @@
         src="#modeloIA"
         animation-mixer
       ></a-gltf-model>
-      -->
 
     </a-entity>
   </a-scene>
