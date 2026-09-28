@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR - 4 Revoluciones Industriales</title>
+
+  <!-- Librerías gratis y open source, cargadas desde CDN -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    body { margin: 0; overflow: hidden; }
+    /* Mensaje de ayuda mientras carga la cámara */
+    .loading {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: black; color: white; font-family: sans-serif;
+      z-index: 999; text-align: center; padding: 20px; box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loading" id="loadingMsg">
+    Apunta la cámara al póster impreso...
+  </div>
+
+  <!--
+    IMPORTANTE - Reemplaza estas rutas:
+    1. "targets.mind" -> ya lo tienes generado a partir del nuevo póster
+    2. Los .glb ya los tenías; se mantienen los mismos 4 modelos
+  -->
+  <a-scene
+    mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; uiScanning: no;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: true"
+  >
+    <a-assets>
+      <a-asset-item id="modelo3d" src="./modelo.glb"></a-asset-item>
+      <a-asset-item id="modeloAuto" src="./modelo-auto.glb"></a-asset-item>
+      <a-asset-item id="modeloComputador" src="./modelo-computador.glb"></a-asset-item>
+      <a-asset-item id="modeloIA" src="./modelo-ia.glb"></a-asset-item>
+    </a-assets>
+
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!--
+      NUEVO PÓSTER: layout en una sola columna vertical (no cuadrícula 2x2).
+      Imagen fuente: 800 x 2000 px -> aspect ratio 1:2.5
+      Rango del plano en MindAR: X de -0.5 a 0.5, Y de -1.25 a 1.25 (según ese aspect ratio)
+      (0,0) = centro exacto del póster. Y positivo = hacia arriba.
+
+      Centros estimados para el nuevo póster:
+        Tren (imagen, izquierda, bloque 1):        x=-0.28  y= 0.56
+        Auto Ford (imagen, derecha, bloque 2):     x= 0.28  y= 0.04
+        Computador (imagen, izquierda, bloque 3):  x=-0.28  y=-0.43
+        IA (imagen, derecha, bloque 4):            x= 0.28  y=-0.83
+
+      Si al probar en tu celular ves que algún modelo queda desfasado,
+      ajusta solo el valor "y" (sube o baja) de ese bloque en pasos de 0.05.
+    -->
+    <a-entity mindar-image-target="targetIndex: 0">
+
+      <!-- 1ra Revolución: Tren de vapor -->
+      <a-gltf-model
+        rotation="0 0 0"
+        position="-0.28 0.56 0.05"
+        scale="0.25 0.25 0.25"
+        src="#modelo3d"
+        animation-mixer
+      ></a-gltf-model>
+
+      <!-- 2da Revolución: Auto Ford -->
+      <a-gltf-model
+        rotation="0 0 0"
+        position="0.28 0.04 0.05"
+        scale="0.0015 0.0015 0.0015"
+        src="#modeloAuto"
+        animation-mixer
+      ></a-gltf-model>
+
+      <!-- 3ra Revolución: Computador -->
+      <a-gltf-model
+        rotation="0 0 0"
+        position="-0.28 -0.43 0.05"
+        scale="0.00025 0.00025 0.00025"
+        src="#modeloComputador"
+        animation-mixer
+      ></a-gltf-model>
+
+      <!-- 4ta Revolución: IA -->
+      <a-gltf-model
+        rotation="0 0 0"
+        position="0.28 -0.83 0.05"
+        scale="0.025 0.025 0.025"
+        src="#modeloIA"
+        animation-mixer
+      ></a-gltf-model>
+
+    </a-entity>
+  </a-scene>
+
+  <script>
+    // Oculta el mensaje de carga cuando la cámara arranca
+    const scene = document.querySelector('a-scene');
+    scene.addEventListener('renderstart', () => {
+      document.getElementById('loadingMsg').style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
